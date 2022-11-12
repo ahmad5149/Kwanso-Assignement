@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Col } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -15,12 +15,14 @@ type props = {
   deleteTasks?: any;
 };
 function Task({ task, setDeleteTasks, deleteTasks }: props) {
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<number>();
+  const [taskId, setTaskId] = useState<number>();
 
   const location = useLocation();
 
   const selectForDelete = (task: any, e: any) => {
     setChecked(e.target.checked);
+    setTaskId(task.id);
 
     if (e.target.checked) {
       const exist = deleteTasks.filter((existTask: tasksTyps) => {
@@ -49,7 +51,7 @@ function Task({ task, setDeleteTasks, deleteTasks }: props) {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check
                 type="checkbox"
-                checked={checked}
+                checked={taskId === task.id && checked ? true : false}
                 onChange={(e: any) => selectForDelete(task, e)}
               />
             </Form.Group>
@@ -65,4 +67,4 @@ function Task({ task, setDeleteTasks, deleteTasks }: props) {
   );
 }
 
-export default Task;
+export default memo(Task);

@@ -8,6 +8,7 @@ import { tasksTyps } from "./Task";
 function BulkDelete() {
   const { tasksList, setTaskList } = useContext(Context);
   const [deleteTasks, setDeleteTasks] = useState<any>([]);
+  const [checked, setChecked] = useState<any>();
   const bulkDelete = () => {
     const remainingTasks = tasksList.filter((task: tasksTyps) => {
       return !deleteTasks.some((forDelete: tasksTyps) => {
